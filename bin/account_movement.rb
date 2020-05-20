@@ -3,24 +3,24 @@
 require 'csv'
 
 def process(csv_accounts_file, csv_transactions_file)
-  accounts = process_acounts_file(csv_accounts_file)
-  balance = process_transactions(accounts, csv_transactions_file)
-  print_balance(balance)
+  accounts_with_balance = process_acounts_file(csv_accounts_file)
+  process_transactions(accounts_with_balance, csv_transactions_file)
+  print_balance(accounts_with_balance)
 end
 
 def process_acounts_file(data_file)
-  csv_accounts =  read_csv_file(data_file)
-  csv_accounts.to_h { |k, v| [k, v.to_i] }
+  rows =  read_csv_file(data_file)
+  rows.to_h { |k, v| [k, v.to_i] }
 end
 
-def process_transactions(accounts, data_file)
+def process_transactions(balance_accounts, data_file)
   transactions = read_csv_file(data_file)
 
   transactions.each do |account, value|
-    accounts[account] = calculate_transaction(accounts[account], value)
+    balance_accounts[account] = calculate_transaction(balance_accounts[account], value)
   end
 
-  accounts
+  balance_accounts
 end
 
 def calculate_transaction(balance, value)
