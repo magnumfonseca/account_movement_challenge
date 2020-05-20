@@ -22,6 +22,13 @@ RSpec.describe 'account_movement' do
     it{ expect(process_acounts_file(csv_account_file)).to eq expected }
   end
 
+  describe '#print' do
+    let(:accounts) { {123 => -2748} }
+    let(:output_expected) {  }
+
+    it { expect { print_balance(accounts) }.to output(/Saldo final de R\$ -27.48 na conta 123/).to_stdout }
+  end
+
   describe '#process_transactions' do
     let(:accounts) { {123 => 13052, 531 => 89000, 2314 => 123400} }
     let(:csv_transactions_file) { 'spec/fixtures/transacoes.csv' }

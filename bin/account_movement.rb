@@ -23,6 +23,12 @@ def calculate_transaction(balance, value)
   balance
 end
 
+def print_balance(accounts)
+  accounts.each do |account, balance|
+    p "Saldo final de R$ #{ balance.to_f / 100 } na conta #{account}"
+  end
+end
+
 def read_csv_file(data_file)
   begin
     CSV.read(data_file, headers: false, converters: :numeric).reject(&:empty?)
@@ -33,5 +39,5 @@ end
 
 if $0 == __FILE__
   raise ArgumentError, "Usage: #{$0} <filename>" unless ARGV.length == 2
-  #process(ARGV[0])
+  #process(ARGV[0], ARGV[1])
 end
