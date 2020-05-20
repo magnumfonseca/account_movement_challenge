@@ -2,6 +2,12 @@
 
 require 'csv'
 
+def process(csv_accounts_file, csv_transactions_file)
+  accounts = process_acounts_file(csv_accounts_file)
+  balance = process_transactions(accounts, csv_transactions_file)
+  print_balance(balance)
+end
+
 def process_acounts_file(data_file)
   csv_accounts =  read_csv_file(data_file)
   csv_accounts.to_h { |k, v| [k, v.to_i] }
@@ -38,6 +44,6 @@ def read_csv_file(data_file)
 end
 
 if $0 == __FILE__
-  raise ArgumentError, "Usage: #{$0} <filename>" unless ARGV.length == 2
-  #process(ARGV[0], ARGV[1])
+  raise ArgumentError, "Usage: #{$0} must receive accounts file and transactions file " unless ARGV.length == 2
+  process(ARGV[0], ARGV[1])
 end
